@@ -55,6 +55,7 @@
   when: features.gradle
   tags:
     - gradle
+    - gradle_test
     - test
 
 - name: 'Test for presence of Gradle'
@@ -62,34 +63,18 @@
   when: features.gradle
   tags:
     - gradle
-    - test
-
-- name: 'set JAVA_HOME on Debian'
-  become: yes
-  set_fact:
-    JAVA_HOME: '/usr/lib/jvm/jdk1.8.0_111'
-  when: ansible_os_family == 'Debian' and features.gradle
-  tags:
-    - gradle
-    - test
-
-- name: 'set JAVA_HOME on RedHat'
-  become: yes
-  set_fact:
-    JAVA_HOME: '/usr/java/jdk1.8.0_111'
-  when: ansible_os_family == 'RedHat' and features.gradle
-  tags:
-    - gradle
+    - gradle_test
     - test
 
 - name: 'Test running Gradle'
   become: no
   environment:
-    JAVA_HOME: "{{ JAVA_HOME }}"
+    JAVA_HOME: "{{ java8_home }}"
   command: "{{gradle_home}}/bin/gradle build"
   when: features.gradle
   tags:
     - gradle
+    - gradle_test
     - test
 
 - name: 'remove Gradle test file'

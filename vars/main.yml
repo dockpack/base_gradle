@@ -1,0 +1,5 @@
+---
+features:
+  gradle: True
+
+gradle_home: "/opt/{{gradle_name}}"

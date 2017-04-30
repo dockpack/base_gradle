@@ -19,5 +19,5 @@ galaxy_info:
     - development
 
 dependencies:
-  - { src: base_java8 }
+  - { role: base_java8 }
 

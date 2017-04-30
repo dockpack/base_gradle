@@ -8,8 +8,9 @@
     - gradle
 
 - name: 'install unzip'
-  yum: name=unzip state=present
+  become: yes
   when: features.gradle and ansible_os_family == 'RedHat'
+  yum: name=unzip state=present
   tags:
     - gradle
 

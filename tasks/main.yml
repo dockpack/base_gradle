@@ -1,4 +1,5 @@
 ---
+
 ### Gradle
 - name: 'verify presence of Gradle'
   stat: path={{gradle_home}}/bin/gradle

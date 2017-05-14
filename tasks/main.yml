@@ -1,6 +1,15 @@
 ---
 
 ### Gradle
+
+- name: set gradle_name
+  set_fact:
+    gradle_name: "gradle-{{gradle_version}}"
+
+- name: set gradle_home
+  set_fact:
+    gradle_home: "/opt/{{gradle_name}}"
+
 - name: 'verify presence of Gradle'
   stat: path={{gradle_home}}/bin/gradle
   register: gradle_installed

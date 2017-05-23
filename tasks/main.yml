@@ -5,27 +5,40 @@
 - name: set gradle_name
   set_fact:
     gradle_name: "gradle-{{gradle_version}}"
+  tags:
+    - gradle
 
 - name: set gradle_home
   set_fact:
     gradle_home: "/opt/{{gradle_name}}"
+  tags:
+    - gradle
+
+- name: 'install gradle facts'
+  template:
+    src: gradle.fact
+    dest: /etc/ansible/facts.d/gradle.fact
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+    - gradle
 
 - name: 'verify presence of Gradle'
   stat: path={{gradle_home}}/bin/gradle
   register: gradle_installed
-  when: features.gradle
   tags:
     - gradle
 
 - name: 'install unzip'
   become: yes
-  when: features.gradle and ansible_os_family == 'RedHat'
+  when: ansible_os_family == 'RedHat'
   yum: name=unzip state=present
   tags:
     - gradle
 
 - name: install debian packages
-  when: features.gradle and ansible_os_family == 'Debian'
+  when: ansible_os_family == 'Debian'
   become: yes
   apt:
     name: unzip
@@ -36,34 +49,25 @@
 - name: 'download Gradle'
   unarchive: copy=no src={{gradle_url}} dest=/opt validate_certs=no
   retries: 3
-  when: features.gradle and not gradle_installed.stat.exists
+  when: not gradle_installed.stat.exists
   tags:
     - gradle
 
 - name: 'install /etc/profile.d/gradle.sh'
   template: src=etc-profile-d-gradle-sh.j2 dest=/etc/profile.d/gradle.sh
           owner=root group=root mode=0644
-  when: features.gradle
   tags:
     - gradle
 
 - name: 'verify presence of Gradle download'
   stat: path=/tmp/{{gradle_zipfile}}
   register: gradle_download
-  when: features.gradle
-  tags:
-    - gradle
-
-- name: 'make sure Gradle directory is absent'
-  file: dest={{gradle_home}} state=absent
-  when: not features.gradle
   tags:
     - gradle
 
 - name: 'copy simple build template'
   become: no
   template: src=build.gradle dest=~/build.gradle
-  when: features.gradle
   tags:
     - gradle
     - gradle_test
@@ -71,7 +75,6 @@
 
 - name: 'Test for presence of Gradle'
   stat: path={{gradle_home}}/bin/gradle
-  when: features.gradle
   tags:
     - gradle
     - gradle_test
@@ -82,7 +85,6 @@
   environment:
     JAVA_HOME: "{{ java8_home }}"
   command: "{{gradle_home}}/bin/gradle build"
-  when: features.gradle
   tags:
     - gradle
     - gradle_test
@@ -91,7 +93,6 @@
 - name: 'remove Gradle test file'
   become: no
   file: dest=/home/deployer/build.gradle state=absent
-  when: features.gradle
   tags:
     - gradle
     - test

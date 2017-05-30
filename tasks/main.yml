@@ -62,7 +62,7 @@
     - gradle
 
 - name: 'install /etc/profile.d/gradle.sh'
-  template: src=etc-profile-d-gradle-sh.j2 dest=/etc/profile.d/gradle.sh
+  template: src=etc-profile-d-gradle-sh dest=/etc/profile.d/gradle.sh
           owner=root group=root mode=0644
   tags:
     - gradle

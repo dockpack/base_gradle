@@ -7,12 +7,14 @@
     gradle_name: "gradle-{{gradle_version}}"
   tags:
     - gradle
+    - test
 
 - name: set gradle_home
   set_fact:
     gradle_home: "/opt/{{gradle_name}}"
   tags:
     - gradle
+    - test
 
 - name: ensure facts dir
   file:

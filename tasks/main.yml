@@ -34,6 +34,11 @@
   tags:
     - gradle
 
+- name: 'Load local facts'
+  setup:
+  tags:
+    - test
+
 - name: 'verify presence of Gradle'
   stat: path={{gradle_home}}/bin/gradle
   register: gradle_installed
@@ -86,8 +91,9 @@
 - name: 'funtional test of Gradle'
   become: no
   environment:
-    JAVA_HOME: "/usr/lib/jvm/java"
+    JAVA_HOME: "{{ java8_home }}"
   command: "{{gradle_home}}/bin/gradle build"
+  changed_when: no  # test only
   args:
     creates: build
 

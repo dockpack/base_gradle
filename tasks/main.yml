@@ -4,14 +4,14 @@
 
 - name: set gradle_name
   set_fact:
-    gradle_name: "gradle-{{gradle_version}}"
+    gradle_name: "gradle-{{ gradle_version }}"
   tags:
     - gradle
     - test
 
 - name: set gradle_home
   set_fact:
-    gradle_home: "/opt/{{gradle_name}}"
+    gradle_home: "/opt/{{ gradle_name }}"
   tags:
     - gradle
     - test
@@ -40,7 +40,8 @@
     - test
 
 - name: 'verify presence of Gradle'
-  stat: path={{gradle_home}}/bin/gradle
+  stat:
+    path: "{{ gradle_home }}/bin/gradle"
   register: gradle_installed
   tags:
     - gradle
@@ -48,7 +49,9 @@
 - name: 'install unzip'
   become: yes
   when: ansible_os_family == 'RedHat'
-  yum: name=unzip state=present
+  yum:
+    name: unzip
+    state: present
   tags:
     - gradle
 
@@ -62,27 +65,38 @@
     - gradle
 
 - name: 'download Gradle'
-  unarchive: copy=no src={{gradle_url}} dest=/opt validate_certs=no
+  unarchive:
+    copy: no
+    src: "{{ gradle_url }}"
+    dest: '/opt'
+    validate_certs: no
   retries: 3
   when: not gradle_installed.stat.exists
   tags:
     - gradle
 
 - name: 'install /etc/profile.d/gradle.sh'
-  template: src=etc-profile-d-gradle-sh dest=/etc/profile.d/gradle.sh
-          owner=root group=root mode=0644
+  template:
+    src: etc-profile-d-gradle-sh
+    dest: /etc/profile.d/gradle.sh
+    owner: root
+    group: root
+    mode: 0644
   tags:
     - gradle
 
 - name: 'verify presence of Gradle download'
-  stat: path=/tmp/{{gradle_zipfile}}
+  stat:
+    path: "/tmp/{{ gradle_zipfile }}"
   register: gradle_download
   tags:
     - gradle
 
 - name: 'copy simple build template'
   become: no
-  template: src=build.gradle dest=~/build.gradle
+  template:
+    src: build.gradle
+    dest: ~/build.gradle
   tags:
     - gradle
     - gradle_test
@@ -92,7 +106,7 @@
   become: no
   environment:
     JAVA_HOME: "{{ java8_home }}"
-  command: "{{gradle_home}}/bin/gradle build"
+  command: "{{ gradle_home }}/bin/gradle build"
   changed_when: no  # test only
   args:
     creates: build
@@ -104,7 +118,9 @@
 
 - name: 'remove Gradle test file'
   become: no
-  file: dest=/home/deployer/build.gradle state=absent
+  file:
+    dest: /home/deployer/build.gradle
+    state: absent
   tags:
     - gradle
     - test

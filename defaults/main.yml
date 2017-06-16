@@ -2,5 +2,5 @@
 
 gradle_version: 3.5
 
-gradle_zipfile: "{{gradle_name}}-bin.zip"
-gradle_url: https://services.gradle.org/distributions/{{gradle_zipfile}}
+gradle_zipfile: "{{ gradle_name }}-bin.zip"
+gradle_url: https://services.gradle.org/distributions/{{ gradle_zipfile }}

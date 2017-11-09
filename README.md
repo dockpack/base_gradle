@@ -1,24 +1,24 @@
-bbaassssiiee.artifactory
+dockpack.gradle
 =========
 
-Ant - Another new tool. To build Java projects.
+Gradle - To build Java projects.
 
 Requirements
 ------------
 
-This role was built for Ubuntu Trustym or RedHat systems like RHEL 6, Centos 6. It needs bbaassssiiee.base_java8.
+This role was built for Ubuntu Trustym or RedHat systems like RHEL 6, Centos 6. It needs   dockpack.base_java8.
 
 Role Variables
 --------------
 
-ant\_version: 1.10.1
+gradle: 1.10.1
 
-ant\_base: "/opt"
+gradle\_base: "/opt"
 
 Dependencies
 ------------
 
-Ant needs Java8. This role depends on bbaassssiiee.base_java8, which will be installed automatically if you use this one.
+Ant needs Java8. This role depends on dockpack.base_java8, which will be installed automatically if you use this one.
 
 
 
@@ -31,7 +31,7 @@ Example of how to use this role:
 
     - hosts: servers
       roles:
-         - { role: bbaassssiiee.base_gradle }
+         - { role: dockpack.base_gradle }
 
 License
 -------

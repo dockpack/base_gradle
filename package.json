@@ -1,0 +1,10 @@
+{
+  "name": "dockpack.base_gradle",
+  "version": "0.2.4",
+  "scripts": {
+    "release": "release-it"
+  },
+  "devDependencies": {
+    "release-it": "^4.2.0"
+  }
+}

@@ -1,4 +1,5 @@
-![Build Status](https://api.travis-ci.org/dockpack/base_gradle.svg)
+[![Galaxy](https://img.shields.io/badge/galaxy-dockpack.base__gradle-blue.svg?style=flat)](https://galaxy.ansible.com/dockpack/base_gradle)[![Build Status](https://api.travis-ci.org/dockpack/base_gradle.svg)](https://travis-ci.org/dockpack/base_gradle)
+
 
 base_gradle
 =========
